@@ -363,7 +363,7 @@ function filterAppointments(){
   }
 }
 
-/* ========= Init ========= */
+/* ========= Init h========= */
 document.addEventListener('DOMContentLoaded', async () => {
   await guard();
   showToday();
