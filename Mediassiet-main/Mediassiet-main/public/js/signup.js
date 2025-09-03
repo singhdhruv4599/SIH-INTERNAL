@@ -60,6 +60,111 @@
     roleCards.doctor.onclick = () => activate("doctor");
     roleCards.hospital.onclick = () => activate("hospital");
   
-    // same Supabase signup logic here...
+    // Parallax effect
+    brand.addEventListener("mousemove", (e) => {
+      const r = brand.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      parallax.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+    });
+    brand.addEventListener("mouseleave", () => parallax.style.transform = "translate(0,0)");
+
+    // Function to show error/success messages
+    function showMessage(message, type = 'error') {
+      // Remove existing messages
+      const existing = document.querySelector('.message-alert');
+      if (existing) existing.remove();
+
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `message-alert fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-md ${
+        type === 'success' 
+          ? 'bg-green-100 border border-green-400 text-green-700' 
+          : 'bg-red-100 border border-red-400 text-red-700'
+      }`;
+      alertDiv.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span>${message}</span>
+          <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-lg font-bold">&times;</button>
+        </div>
+      `;
+      document.body.appendChild(alertDiv);
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        if (alertDiv.parentElement) alertDiv.remove();
+      }, 5000);
+    }
+
+    // Signup form submission handler
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      let email = "", password = "", userData = {};
+
+      // Get form data based on active role
+      if (activeRole === "patient") {
+        email = document.getElementById("patientEmail").value.trim();
+        password = document.getElementById("patientPassword").value.trim();
+        userData = {
+          fullName: document.getElementById("patientName").value.trim(),
+          role: CONFIG.ROLES.PATIENT
+        };
+      } else if (activeRole === "doctor") {
+        email = document.getElementById("doctorEmail").value.trim();
+        password = document.getElementById("doctorPassword").value.trim();
+        userData = {
+          fullName: document.getElementById("doctorName").value.trim(),
+          licenseNo: document.getElementById("doctorLicense").value.trim(),
+          role: CONFIG.ROLES.DOCTOR
+        };
+      } else {
+        email = document.getElementById("hospitalEmail").value.trim();
+        password = document.getElementById("hospitalPassword").value.trim();
+        userData = {
+          hospitalName: document.getElementById("hospitalName").value.trim(),
+          registrationId: document.getElementById("hospitalReg").value.trim(),
+          role: CONFIG.ROLES.HOSPITAL,
+          fullName: document.getElementById("hospitalName").value.trim() // Use hospital name as full name
+        };
+      }
+
+      // Basic validation
+      if (!email || !password) {
+        showMessage("Please fill in all required fields");
+        return;
+      }
+
+      if (!userData.fullName && !userData.hospitalName) {
+        showMessage("Please enter your name");
+        return;
+      }
+
+      // Disable submit button during processing
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating Account...';
+
+      try {
+        // Use the Auth.signUp method from auth.js
+        const result = await Auth.signUp(email, password, userData);
+        
+        if (result.success) {
+          showMessage(result.message, 'success');
+          // Redirect to login after successful signup
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 2000);
+        } else {
+          showMessage(result.error || 'Failed to create account');
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        showMessage(error.message || 'An unexpected error occurred');
+      } finally {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
   })();
-  

@@ -128,21 +128,8 @@
         
         if (!data?.user) throw new Error("Login failed. Please try again.");
   
-        let role = data.user.user_metadata?.role;
-        if (!role) {
-          const { data: profile, error: profileError } = await supabaseClient
-            .from("profiles")
-            .select("role")
-            .eq("id", data.user.id)
-            .single();
-            
-          if (profileError) {
-            console.error("Profile error:", profileError);
-            showError("Error loading your profile. Please try again.");
-            return;
-          }
-          role = profile?.role || "patient";
-        }
+        // get role from metadata only
+        let role = data.user.user_metadata?.role || "patient";
         
         // Clear any existing error before redirecting
         clearError();
