@@ -15,12 +15,17 @@
       --warning: #f59e0b;
       --dark: #0f172a;
       --light: #f8fafc;
-      --gray-100: #f1f5f9;
-      --gray-200: #e2e8f0;
-      --gray-300: #cbd5e1;
-      --gray-700: #334155;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
       --transition: all 0.3s ease;
     }
@@ -33,8 +38,8 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f8fafc;
-      color: var(--dark);
+      background-color: var(--gray-50);
+      color: var(--gray-800);
       line-height: 1.5;
     }
 
@@ -52,6 +57,7 @@
       padding: 1.5rem 0;
       transition: var(--transition);
       z-index: 100;
+      border-right: 1px solid var(--gray-200);
     }
 
     .sidebar-header {
@@ -66,13 +72,13 @@
       gap: 0.75rem;
       font-size: 1.25rem;
       font-weight: 700;
-      color: var(--dark);
+      color: var(--gray-800);
       text-decoration: none;
     }
 
     .brand-logo {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       background: var(--primary);
       border-radius: 8px;
       display: flex;
@@ -80,6 +86,7 @@
       justify-content: center;
       color: white;
       font-weight: 700;
+      font-size: 14px;
     }
 
     .nav-menu {
@@ -95,28 +102,34 @@
       display: flex;
       align-items: center;
       padding: 0.75rem 1rem;
-      color: var(--gray-700);
+      color: var(--gray-600);
       text-decoration: none;
       border-radius: 0.5rem;
       transition: var(--transition);
+      font-weight: 500;
     }
 
-    .nav-link:hover, .nav-link.active {
+    .nav-link:hover {
       background: var(--gray-100);
       color: var(--primary);
     }
 
+    .nav-link.active {
+      background: #e0f2fe;
+      color: var(--primary);
+    }
+
     .nav-link i {
-      width: 24px;
+      width: 20px;
       margin-right: 0.75rem;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     /* Main Content */
     .main-content {
       flex: 1;
       overflow-y: auto;
-      background: var(--gray-100);
+      background: var(--gray-50);
     }
 
     /* Top Bar */
@@ -127,23 +140,26 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: var(--shadow-sm);
+      border-bottom: 1px solid var(--gray-200);
       position: sticky;
       top: 0;
       z-index: 90;
     }
 
-    .search-bar {
-      position: relative;
+    .search-container {
+      flex: 1;
       max-width: 400px;
-      width: 100%;
+      margin: 0 2rem;
+      position: relative;
     }
 
     .search-input {
       width: 100%;
       padding: 0.6rem 1rem 0.6rem 2.5rem;
-      border: 1px solid var(--gray-200);
+      border: 1px solid var(--gray-300);
       border-radius: 0.5rem;
       font-size: 0.95rem;
+      background-color: var(--gray-50);
       transition: var(--transition);
     }
 
@@ -151,14 +167,16 @@
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      background-color: white;
     }
 
     .search-icon {
       position: absolute;
-      left: 1rem;
+      left: 0.75rem;
       top: 50%;
       transform: translateY(-50%);
       color: var(--gray-400);
+      font-size: 1rem;
     }
 
     .user-menu {
@@ -169,28 +187,39 @@
 
     .notification-icon {
       position: relative;
-      color: var(--gray-700);
+      color: var(--gray-500);
       cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .notification-icon:hover {
+      background-color: var(--gray-100);
+      color: var(--primary);
     }
 
     .notification-badge {
       position: absolute;
-      top: -4px;
-      right: -4px;
+      top: 6px;
+      right: 6px;
       background: var(--danger);
       color: white;
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       font-size: 0.7rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 2px solid white;
+      font-weight: 600;
     }
 
     .user-avatar {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: var(--primary);
       color: white;
@@ -199,6 +228,7 @@
       justify-content: center;
       font-weight: 600;
       cursor: pointer;
+      font-size: 0.9rem;
     }
 
     /* Dashboard Content */
@@ -211,90 +241,100 @@
     }
 
     .dashboard-title {
-      font-size: 1.75rem;
+      font-size: 1.875rem;
       font-weight: 700;
-      color: var(--dark);
+      color: var(--gray-800);
       margin-bottom: 0.5rem;
     }
 
     .dashboard-subtitle {
-      color: var(--gray-500);
+      color: var(--gray-600);
       font-size: 1rem;
     }
 
     /* Stats Grid */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.5rem;
       margin-bottom: 2rem;
     }
 
     .stat-card {
       background: white;
-      border-radius: 1rem;
+      border-radius: 0.75rem;
       padding: 1.5rem;
       box-shadow: var(--shadow);
       transition: var(--transition);
-      border-left: 4px solid var(--primary);
+      border: 1px solid var(--gray-200);
     }
 
-    .stat-card.warning {
-      border-left-color: var(--warning);
-    }
-
-    .stat-card.success {
-      border-left-color: var(--secondary);
-    }
-
-    .stat-card.danger {
-      border-left-color: var(--danger);
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
     }
 
     .stat-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: flex-start;
       margin-bottom: 1rem;
+    }
+
+    .stat-info h3 {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gray-800);
     }
 
     .stat-icon {
       width: 48px;
       height: 48px;
-      border-radius: 0.75rem;
+      border-radius: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.25rem;
       color: white;
-      font-size: 1.5rem;
     }
 
     .stat-icon.primary {
       background: var(--primary);
     }
 
-    .stat-icon.warning {
-      background: var(--warning);
-    }
-
     .stat-icon.success {
       background: var(--secondary);
+    }
+
+    .stat-icon.warning {
+      background: var(--warning);
     }
 
     .stat-icon.danger {
       background: var(--danger);
     }
 
-    .stat-value {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--dark);
-      margin: 0.5rem 0;
+    .stat-change {
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem;
+      margin-top: 0.75rem;
+      gap: 0.25rem;
     }
 
-    .stat-label {
-      color: var(--gray-500);
-      font-size: 0.9rem;
+    .stat-change.positive {
+      color: var(--secondary);
+    }
+
+    .stat-change.negative {
+      color: var(--danger);
     }
 
     /* Content Tabs */
@@ -302,60 +342,98 @@
       display: flex;
       border-bottom: 1px solid var(--gray-200);
       margin-bottom: 1.5rem;
+      background: white;
+      border-radius: 0.5rem 0.5rem 0 0;
+      padding: 0 1rem;
     }
 
     .content-tab {
-      padding: 0.75rem 1.25rem;
+      padding: 1rem 1.5rem;
       cursor: pointer;
       font-weight: 500;
-      color: var(--gray-500);
-      border-bottom: 2px solid transparent;
+      color: var(--gray-600);
+      border-bottom: 3px solid transparent;
       transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .content-tab:hover, .content-tab.active {
+    .content-tab:hover {
+      color: var(--primary);
+      background-color: var(--gray-50);
+    }
+
+    .content-tab.active {
       color: var(--primary);
       border-bottom-color: var(--primary);
     }
 
-    /* Data Grid */
-    .data-grid {
+    /* Hospital Cards */
+    .content-area {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .showing-count {
+      color: var(--gray-500);
+      font-size: 0.875rem;
+    }
+
+    .hospitals-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 1.5rem;
     }
 
-    .data-card {
+    .hospital-card {
       background: white;
-      border-radius: 1rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 0.75rem;
       overflow: hidden;
-      box-shadow: var(--shadow);
       transition: var(--transition);
     }
 
-    .data-card:hover {
-      transform: translateY(-4px);
+    .hospital-card:hover {
       box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
     }
 
-    .data-card-header {
-      padding: 1.25rem 1.5rem;
+    .hospital-header {
+      padding: 1.25rem;
       border-bottom: 1px solid var(--gray-200);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .data-card-title {
+    .hospital-name {
+      font-size: 1.125rem;
       font-weight: 600;
-      color: var(--dark);
+      color: var(--gray-800);
     }
 
-    .status-badge {
+    .hospital-status {
       padding: 0.25rem 0.75rem;
-      border-radius: 1rem;
+      border-radius: 9999px;
       font-size: 0.75rem;
       font-weight: 500;
+      text-transform: uppercase;
     }
 
     .status-available {
@@ -363,87 +441,39 @@
       color: #166534;
     }
 
-    .status-warning {
-      background: #fef3c7;
-      color: #92400e;
-    }
-
-    .status-danger {
+    .status-occupied {
       background: #fee2e2;
       color: #991b1b;
     }
 
-    .data-card-body {
-      padding: 1.5rem;
+    .hospital-body {
+      padding: 1.25rem;
     }
 
-    .data-card-details {
-      margin-bottom: 1.5rem;
-    }
-
-    .detail-item {
+    .hospital-info {
       display: flex;
-      margin-bottom: 0.75rem;
-      font-size: 0.95rem;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
-    .detail-label {
-      color: var(--gray-500);
-      width: 120px;
-      flex-shrink: 0;
-    }
-
-    .detail-value {
-      color: var(--dark);
-      font-weight: 500;
-    }
-
-    .data-card-footer {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid var(--gray-200);
+    .info-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 0.875rem;
     }
 
-    .btn {
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
+    .info-label {
+      color: var(--gray-500);
       font-weight: 500;
-      cursor: pointer;
-      transition: var(--transition);
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
     }
 
-    .btn-sm {
-      padding: 0.4rem 0.8rem;
-      font-size: 0.85rem;
+    .info-value {
+      color: var(--gray-800);
+      font-weight: 600;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #1d4ed8;
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--gray-300);
-      color: var(--gray-700);
-    }
-
-    .btn-outline:hover {
-      background: var(--gray-100);
-    }
-
-    /* Responsive */
+    /* Responsive Design */
     @media (max-width: 1024px) {
       .sidebar {
         transform: translateX(-100%);
@@ -459,130 +489,28 @@
         margin-left: 0;
         width: 100%;
       }
-
-      .menu-toggle {
-        display: block;
-      }
     }
 
     @media (max-width: 768px) {
+      .dashboard-content {
+        padding: 1rem;
+      }
+
       .stats-grid {
         grid-template-columns: 1fr;
       }
 
-      .search-bar {
-        max-width: 200px;
+      .hospitals-grid {
+        grid-template-columns: 1fr;
       }
-    }
 
-    @media (max-width: 576px) {
+      .search-container {
+        margin: 0 1rem;
+      }
+
       .top-bar {
-        flex-direction: column;
-        gap: 1rem;
         padding: 1rem;
       }
-
-      .search-bar {
-        max-width: 100%;
-      }
-
-      .dashboard-content {
-        padding: 1.5rem 1rem;
-      }
-    }
-
-    /* Hospital Card Specific */
-    .hospital-header { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      margin-bottom: 1rem; 
-    }
-    .hospital-name { 
-      font-size: 1.2rem; 
-      font-weight: 700; 
-      color: #1e293b; 
-    }
-    .hospital-status {
-      padding: 0.3rem 0.9rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: capitalize;
-    }
-    .status-available { background:#bbf7d0; color:#065f46; }
-    .status-full { background:#fecaca; color:#991b1b; }
-
-    .info-row { margin:0.4rem 0; color:#334155; font-size:0.95rem; }
-
-    /* Section Title */
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 2rem 0 1rem;
-      color: #111827;
-      border-left: 5px solid #2563eb;
-      padding-left: 1rem;
-    }
-    
-    .text-success {
-      color: #10b981;
-    }
-    
-    .text-warning {
-      color: #f59e0b;
-    }
-    
-    .text-danger {
-      color: #ef4444;
-    }
-    
-    .me-1 {
-      margin-right: 0.25rem;
-    }
-    
-    .mr-1 {
-      margin-right: 0.25rem;
-    }
-    
-    .mb-4 {
-      margin-bottom: 1rem;
-    }
-    
-    .flex {
-      display: flex;
-    }
-    
-    .justify-between {
-      justify-content: space-between;
-    }
-    
-    .items-center {
-      align-items: center;
-    }
-    
-    .w-full {
-      width: 100%;
-    }
-    
-    .bg-gray-200 {
-      background-color: #e5e7eb;
-    }
-    
-    .rounded-full {
-      border-radius: 9999px;
-    }
-    
-    .h-2\.5 {
-      height: 0.625rem;
-    }
-    
-    .bg-green-500 {
-      background-color: #10b981;
-    }
-    
-    .bg-red-500 {
-      background-color: #ef4444;
     }
   </style>
 </head>
@@ -592,44 +520,44 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <a href="#" class="brand">
-          <span class="brand-logo">RC</span>
+          <span class="brand-logo">MA</span>
           <span>MediAssist</span>
         </a>
       </div>
       <nav>
         <ul class="nav-menu">
           <li class="nav-item">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link active" onclick="switchTab('dashboard'); return false;">
               <i class="fas fa-home"></i>
               <span>Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="showHospitals(); return false;">
+            <a href="#" class="nav-link" onclick="switchTab('hospitals'); return false;">
               <i class="fas fa-hospital"></i>
               <span>Hospitals</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="showDoctors(); return false;">
+            <a href="#" class="nav-link" onclick="switchTab('doctors'); return false;">
               <i class="fas fa-user-md"></i>
               <span>Doctors</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="showAppointments(); return false;">
+            <a href="#" class="nav-link" onclick="switchTab('appointments'); return false;">
               <i class="fas fa-calendar-check"></i>
               <span>Appointments</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="showEmergency(); return false;">
+            <a href="#" class="nav-link" onclick="switchTab('emergency'); return false;">
               <i class="fas fa-ambulance"></i>
               <span>Emergency</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="showSettings(); return false;">
+            <a href="#" class="nav-link" onclick="switchTab('settings'); return false;">
               <i class="fas fa-cog"></i>
               <span>Settings</span>
             </a>
@@ -641,35 +569,27 @@
     <!-- Main Content -->
     <main class="main-content">
       <!-- Top Bar -->
-      <header class="top-bar">
-        <div class="search-bar">
-          <i class="fas fa-search search-icon"></i>
-          <input type="text" class="search-input" placeholder="Search hospitals, doctors, or locations..." id="searchInput" onkeyup="applyFilter()">
+      <div class="top-bar">
+        <div></div>
+        <div class="search-container">
+          <div class="search-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <input type="text" class="search-input" placeholder="Search hospitals, doctors, or locations..." onkeyup="handleSearch(event)">
         </div>
         <div class="user-menu">
-          <div class="notification-icon">
+          <div class="notification-icon" onclick="toggleNotifications()">
             <i class="fas fa-bell"></i>
-            <span class="notification-badge">3</span>
+            <span class="notification-badge" id="notificationCount">3</span>
           </div>
-          <div class="user-avatar" id="userAvatar" onclick="toggleUserMenu()">
-            <span>AD</span>
-          </div>
-          <div class="user-dropdown" id="userDropdown" style="display: none;">
-            <div class="dropdown-item" onclick="showProfile()">
-              <i class="fas fa-user"></i> Profile
-            </div>
-            <div class="dropdown-item" onclick="showSettings()">
-              <i class="fas fa-cog"></i> Settings
-            </div>
-            <div class="dropdown-item" onclick="logout()">
-              <i class="fas fa-sign-out-alt"></i> Logout
-            </div>
+          <div class="user-avatar" onclick="toggleUserMenu()">
+            AD
           </div>
         </div>
-      </header>
+      </div>
 
       <!-- Dashboard Content -->
-      <div class="dashboard-content">
+      <div class="dashboard-content" id="mainContent">
         <div class="dashboard-header">
           <h1 class="dashboard-title">Dashboard Overview</h1>
           <p class="dashboard-subtitle">Welcome back, Admin. Here's what's happening today.</p>
@@ -679,582 +599,383 @@
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-header">
-              <div>
-                <div class="stat-label">Total Hospitals</div>
+              <div class="stat-info">
+                <h3>Total Hospitals</h3>
                 <div class="stat-value">24</div>
               </div>
               <div class="stat-icon primary">
                 <i class="fas fa-hospital"></i>
               </div>
             </div>
-            <div class="stat-trend">
-              <span class="text-success">
-                <i class="fas fa-arrow-up"></i> 12% from last month
-              </span>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>12% from last month</span>
             </div>
           </div>
 
-          <div class="stat-card success">
+          <div class="stat-card">
             <div class="stat-header">
-              <div>
-                <div class="stat-label">Available Beds</div>
+              <div class="stat-info">
+                <h3>Available Beds</h3>
                 <div class="stat-value">156</div>
               </div>
               <div class="stat-icon success">
                 <i class="fas fa-bed"></i>
               </div>
             </div>
-            <div class="stat-trend">
-              <span class="text-success">
-                <i class="fas fa-arrow-up"></i> 8% from yesterday
-              </span>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>8% from yesterday</span>
             </div>
           </div>
 
-          <div class="stat-card warning">
+          <div class="stat-card">
             <div class="stat-header">
-              <div>
-                <div class="stat-label">Active Doctors</div>
+              <div class="stat-info">
+                <h3>Active Doctors</h3>
                 <div class="stat-value">48</div>
               </div>
               <div class="stat-icon warning">
                 <i class="fas fa-user-md"></i>
               </div>
             </div>
-            <div class="stat-trend">
-              <span class="text-warning">
-                <i class="fas fa-arrow-down"></i> 2% from last week
-              </span>
+            <div class="stat-change negative">
+              <i class="fas fa-arrow-down"></i>
+              <span>2% from last week</span>
             </div>
           </div>
 
-          <div class="stat-card danger">
+          <div class="stat-card">
             <div class="stat-header">
-              <div>
-                <div class="stat-label">Emergency Cases</div>
+              <div class="stat-info">
+                <h3>Emergency Cases</h3>
                 <div class="stat-value">12</div>
               </div>
               <div class="stat-icon danger">
                 <i class="fas fa-ambulance"></i>
               </div>
             </div>
-            <div class="stat-trend">
-              <span class="text-danger">
-                <i class="fas fa-arrow-up"></i> 20% from yesterday
-              </span>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>20% from yesterday</span>
             </div>
           </div>
         </div>
 
         <!-- Content Tabs -->
         <div class="content-tabs">
-          <div class="content-tab active" onclick="switchTab('hospitals')">
-            <i class="fas fa-hospital me-1"></i> Hospitals
+          <div class="content-tab active" onclick="switchContentTab('hospitals', this)">
+            <i class="fas fa-hospital"></i>
+            <span>Hospitals</span>
           </div>
-          <div class="content-tab" onclick="switchTab('doctors')">
-            <i class="fas fa-user-md me-1"></i> Doctors
+          <div class="content-tab" onclick="switchContentTab('doctors', this)">
+            <i class="fas fa-user-md"></i>
+            <span>Doctors</span>
           </div>
-          <div class="content-tab" onclick="switchTab('equipments')">
-            <i class="fas fa-cogs me-1"></i> Equipments
+          <div class="content-tab" onclick="switchContentTab('equipments', this)">
+            <i class="fas fa-cogs"></i>
+            <span>Equipments</span>
           </div>
         </div>
 
         <!-- Content Area -->
-        <div id="contentArea">
-          <!-- Content will be loaded here -->
+        <div class="content-area">
+          <div id="contentArea">
+            <div class="section-header">
+              <h2 class="section-title">Available Hospitals</h2>
+              <span class="showing-count">Showing 4 of 4 hospitals</span>
+            </div>
+            
+            <div class="hospitals-grid">
+              <div class="hospital-card">
+                <div class="hospital-header">
+                  <h3 class="hospital-name">City General Hospital</h3>
+                  <span class="hospital-status status-available">Available</span>
+                </div>
+                <div class="hospital-body">
+                  <div class="hospital-info">
+                    <div class="info-row">
+                      <span class="info-label">Location:</span>
+                      <span class="info-value">Mumbai, Maharashtra</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Total Beds:</span>
+                      <span class="info-value">45</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Available:</span>
+                      <span class="info-value">12 beds</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Occupancy:</span>
+                      <span class="info-value">73%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hospital-card">
+                <div class="hospital-header">
+                  <h3 class="hospital-name">Metro Health Center</h3>
+                  <span class="hospital-status status-occupied">Fully Occupied</span>
+                </div>
+                <div class="hospital-body">
+                  <div class="hospital-info">
+                    <div class="info-row">
+                      <span class="info-label">Location:</span>
+                      <span class="info-value">Delhi</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Total Beds:</span>
+                      <span class="info-value">30</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Available:</span>
+                      <span class="info-value">0 beds</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Occupancy:</span>
+                      <span class="info-value">100%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hospital-card">
+                <div class="hospital-header">
+                  <h3 class="hospital-name">Sunshine Medical</h3>
+                  <span class="hospital-status status-available">Available</span>
+                </div>
+                <div class="hospital-body">
+                  <div class="hospital-info">
+                    <div class="info-row">
+                      <span class="info-label">Location:</span>
+                      <span class="info-value">Bangalore, Karnataka</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Total Beds:</span>
+                      <span class="info-value">25</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Available:</span>
+                      <span class="info-value">5 beds</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Occupancy:</span>
+                      <span class="info-value">80%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hospital-card">
+                <div class="hospital-header">
+                  <h3 class="hospital-name">Apollo Care Center</h3>
+                  <span class="hospital-status status-available">Available</span>
+                </div>
+                <div class="hospital-body">
+                  <div class="hospital-info">
+                    <div class="info-row">
+                      <span class="info-label">Location:</span>
+                      <span class="info-value">Chennai, Tamil Nadu</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Total Beds:</span>
+                      <span class="info-value">60</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Available:</span>
+                      <span class="info-value">15 beds</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-label">Occupancy:</span>
+                      <span class="info-value">75%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/config.js"></script>
-  <script src="js/auth.js"></script>
+  <!-- JavaScript -->
   <script>
-    // Check authentication status on page load
-    document.addEventListener('DOMContentLoaded', async function() {
-      try {
-        // Wait for supabase to be initialized
-        await new Promise((resolve, reject) => {
-          const checkSupabase = setInterval(() => {
-            if (window.supabaseClient) {
-              clearInterval(checkSupabase);
-              resolve();
-            }
-          }, 100);
-          
-          // Timeout after 5 seconds
-          setTimeout(() => {
-            clearInterval(checkSupabase);
-            reject(new Error('Failed to initialize authentication service'));
-          }, 5000);
-        });
-        
-        // Check if user is authenticated
-        const { data: { session } } = await supabaseClient.auth.getSession();
-        if (!session) {
-          window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.pathname);
-          return;
-        }
-        
-        // Initialize Auth if available
-        if (window.Auth && typeof window.Auth.init === 'function') {
-          await Auth.init();
-          console.log('✅ Dashboard initialized');
-        }
-        
-        // Show user info if element exists
-        const userInfoElement = document.getElementById('user-info');
-        if (userInfoElement && session.user) {
-          const { email, user_metadata } = session.user;
-          userInfoElement.textContent = user_metadata?.full_name || email || 'User';
-        }
-        
-      } catch (error) {
-        console.error('❌ Error initializing dashboard:', error);
-        alert('Failed to initialize dashboard. Please refresh the page or try again later.');
+    // Tab switching functionality
+    function switchTab(tabName) {
+      // Update sidebar navigation
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      event.target.closest('.nav-link').classList.add('active');
+      
+      // Handle different sections
+      const mainContent = document.getElementById('mainContent');
+      
+      switch(tabName) {
+        case 'dashboard':
+          // Show dashboard content (already visible)
+          break;
+        case 'hospitals':
+          switchContentTab('hospitals');
+          break;
+        case 'doctors':
+          switchContentTab('doctors');
+          break;
+        case 'appointments':
+          showAppointments();
+          break;
+        case 'emergency':
+          showEmergency();
+          break;
+        case 'settings':
+          showSettings();
+          break;
       }
-    });
-  </script>
-  <script>
-    // Sample data for demonstration
-    const dummyHospitals = [
-      { 
-        id: 1, 
-        name: 'City General Hospital', 
-        location: 'Mumbai, Maharashtra',
-        beds: 45, 
-        available: 12, 
-        status: 'available',
-        contact: '+91 98765 43210',
-        lastUpdated: '2 hours ago'
-      },
-      { 
-        id: 2, 
-        name: 'Metro Health Center', 
-        location: 'Delhi',
-        beds: 30, 
-        available: 0, 
-        status: 'full',
-        contact: '+91 98765 12345',
-        lastUpdated: '1 hour ago'
-      },
-      { 
-        id: 3, 
-        name: 'Sunshine Medical', 
-        location: 'Bangalore, Karnataka',
-        beds: 25, 
-        available: 5, 
-        status: 'available',
-        contact: '+91 98765 67890',
-        lastUpdated: '3 hours ago'
-      },
-      { 
-        id: 4, 
-        name: 'Green Valley Hospital', 
-        location: 'Hyderabad, Telangana',
-        beds: 50, 
-        available: 3, 
-        status: 'available',
-        contact: '+91 98765 09876',
-        lastUpdated: '5 hours ago'
-      },
-    ];
-
-    const dummyDoctors = [
-      { id: 1, name: 'Dr. Ramesh Kumar', specialization: 'Cardiologist', hospital: 'City General Hospital' },
-      { id: 2, name: 'Dr. Priya Singh', specialization: 'Neurologist', hospital: 'Metro Health Center' },
-      { id: 3, name: 'Dr. Amit Patel', specialization: 'Orthopedic', hospital: 'Sunshine Medical' },
-      { id: 4, name: 'Dr. Anjali Desai', specialization: 'Pediatrician', hospital: 'Green Valley Hospital' },
-    ];
-
-    const dummyEquipments = [
-      { id: 1, name: 'Ventilator', status: 'available', location: 'ICU-1' },
-      { id: 2, name: 'MRI Machine', status: 'in-use', location: 'Radiology' },
-      { id: 3, name: 'X-Ray Machine', status: 'maintenance', location: 'Radiology' },
-      { id: 4, name: 'Defibrillator', status: 'available', location: 'ER' },
-    ];
-
-    // Initialize the dashboard when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      // Set user avatar initials
-      const user = JSON.parse(localStorage.getItem('sb-user')) || { email: 'admin@example.com' };
-      const userName = user.email.split('@')[0];
-      const initials = userName.substring(0, 2).toUpperCase();
-      document.getElementById('userAvatar').textContent = initials;
-
-      // Add click event for mobile menu toggle
-      document.querySelector('.menu-toggle')?.addEventListener('click', toggleSidebar);
-
-      // Load initial data
-      loadHospitals();
-    });
-
-    function toggleSidebar() {
-      document.querySelector('.sidebar').classList.toggle('active');
     }
 
-    function switchTab(tab) {
-      // Update active tab
-      document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
+    // Content tab switching
+    function switchContentTab(tabName, element) {
+      // Update tab appearance
+      document.querySelectorAll('.content-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
       
-      // Load appropriate content
-      if (tab === 'hospitals') loadHospitals();
-      else if (tab === 'doctors') loadDoctors();
-      else if (tab === 'equipments') loadEquipments();
+      if (element) {
+        element.classList.add('active');
+      } else {
+        document.querySelector(`[onclick*="${tabName}"]`).classList.add('active');
+      }
+      
+      const contentArea = document.getElementById('contentArea');
+      
+      switch(tabName) {
+        case 'hospitals':
+          contentArea.innerHTML = getHospitalsContent();
+          break;
+        case 'doctors':
+          contentArea.innerHTML = getDoctorsContent();
+          break;
+        case 'equipments':
+          contentArea.innerHTML = getEquipmentsContent();
+          break;
+      }
     }
 
-    function applyFilter() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const activeTab = document.querySelector('.content-tab.active').textContent.trim();
-      
-      if (activeTab.includes('Hospitals')) loadHospitals(searchTerm);
-      else if (activeTab.includes('Doctors')) loadDoctors(searchTerm);
-      else if (activeTab.includes('Equipments')) loadEquipments(searchTerm);
-    }
-
-    async function loadHospitals(search = "") {
-      const container = document.getElementById("contentArea");
-      
-      // Show loading state
-      container.innerHTML = `
-        <div class="p-8 text-center text-gray-500">
-          <i class="fas fa-spinner fa-spin text-4xl mb-4 text-blue-500"></i>
-          <p>Loading hospitals...</p>
+    // Content generators
+    function getHospitalsContent() {
+      return `
+        <div class="section-header">
+          <h2 class="section-title">Available Hospitals</h2>
+          <span class="showing-count">Showing 4 of 4 hospitals</span>
         </div>
-      `;
-
-      try {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 800));
         
-        const filteredHospitals = dummyHospitals.filter(hospital => 
-          hospital.name.toLowerCase().includes(search) || 
-          hospital.location.toLowerCase().includes(search)
-        );
-
-        if (filteredHospitals.length === 0) {
-          container.innerHTML = `
-            <div class="p-8 text-center">
-              <i class="fas fa-hospital text-4xl mb-4 text-gray-300"></i>
-              <h3 class="text-lg font-medium text-gray-700">No hospitals found</h3>
-              <p class="text-gray-500">Try adjusting your search criteria</p>
+        <div class="hospitals-grid">
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <h3 class="hospital-name">City General Hospital</h3>
+              <span class="hospital-status status-available">Available</span>
             </div>
-          `;
-          return;
-        }
-
-        let html = `
-          <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-semibold text-gray-800">Available Hospitals</h2>
-            <span class="text-sm text-gray-500">Showing ${filteredHospitals.length} of ${dummyHospitals.length} hospitals</span>
-          </div>
-          <div class="data-grid">
-        `;
-
-        filteredHospitals.forEach(hospital => {
-          const occupancyRate = Math.round(((hospital.beds - hospital.available) / hospital.beds) * 100);
-          
-          html += `
-            <div class="data-card">
-              <div class="data-card-header">
-                <h3 class="data-card-title">${hospital.name}</h3>
-                <span class="status-badge status-${hospital.status}">
-                  ${hospital.status === 'available' ? 'Available' : 'Fully Occupied'}
-                </span>
-              </div>
-              <div class="data-card-body">
-                <div class="data-card-details">
-                  <div class="detail-item">
-                    <span class="detail-label">Location:</span>
-                    <span class="detail-value">${hospital.location}</span>
-                  </div>
-                  <div class="detail-item">
-                    <span class="detail-label">Total Beds:</span>
-                    <span class="detail-value">${hospital.beds}</span>
-                  </div>
-                  <div class="detail-item">
-                    <span class="detail-label">Available:</span>
-                    <span class="detail-value">${hospital.available} beds</span>
-                  </div>
-                  <div class="detail-item">
-                    <span class="detail-label">Occupancy:</span>
-                    <span class="detail-value">${occupancyRate}%</span>
-                  </div>
-                  <div class="detail-item">
-                    <span class="detail-label">Contact:</span>
-                    <span class="detail-value">${hospital.contact}</span>
-                  </div>
+            <div class="hospital-body">
+              <div class="hospital-info">
+                <div class="info-row">
+                  <span class="info-label">Location:</span>
+                  <span class="info-value">Mumbai, Maharashtra</span>
                 </div>
-                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-                  <div class="bg-${hospital.status === 'available' ? 'green' : 'red'}-500 h-2.5 rounded-full" 
-                       style="width: ${occupancyRate}%"></div>
+                <div class="info-row">
+                  <span class="info-label">Total Beds:</span>
+                  <span class="info-value">45</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Available:</span>
+                  <span class="info-value">12 beds</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Occupancy:</span>
+                  <span class="info-value">73%</span>
                 </div>
               </div>
-              <div class="data-card-footer">
-                <span class="text-sm text-gray-500">Updated ${hospital.lastUpdated}</span>
-                <button class="btn btn-sm btn-outline" onclick="viewHospitalDetails(${hospital.id})">
-                  <i class="fas fa-arrow-right mr-1"></i> View Details
-                </button>
-              </div>
             </div>
-          `;
-        });
-
-        html += '</div>';
-        container.innerHTML = html;
-      } catch (error) {
-        console.error('Error loading hospitals:', error);
-        container.innerHTML = `
-          <div class="p-8 text-center text-red-500">
-            <i class="fas fa-exclamation-circle text-4xl mb-4"></i>
-            <p>Failed to load hospitals. Please try again later.</p>
           </div>
-        `;
-      }
-    }
 
-    async function loadDoctors(search = "") {
-      const container = document.getElementById("contentArea");
-      
-      // Show loading state
-      container.innerHTML = `
-        <div class="p-8 text-center text-gray-500">
-          <i class="fas fa-spinner fa-spin text-4xl mb-4 text-blue-500"></i>
-          <p>Loading doctors...</p>
-        </div>
-      `;
-
-      try {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        const filteredDoctors = dummyDoctors.filter(doctor => 
-          doctor.name.toLowerCase().includes(search) || 
-          doctor.specialization.toLowerCase().includes(search) ||
-          doctor.hospital.toLowerCase().includes(search)
-        );
-
-        if (filteredDoctors.length === 0) {
-          container.innerHTML = `
-            <div class="p-8 text-center">
-              <i class="fas fa-user-md text-4xl mb-4 text-gray-300"></i>
-              <h3 class="text-lg font-medium text-gray-700">No doctors found</h3>
-              <p class="text-gray-500">Try adjusting your search criteria</p>
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <h3 class="hospital-name">Metro Health Center</h3>
+              <span class="hospital-status status-occupied">Fully Occupied</span>
             </div>
-          `;
-          return;
-        }
-
-        let html = `
-          <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-semibold text-gray-800">Available Doctors</h2>
-            <span class="text-sm text-gray-500">Showing ${filteredDoctors.length} doctors</span>
-          </div>
-          <div class="data-grid">
-        `;
-
-        filteredDoctors.forEach(doctor => {
-          html += `
-            <div class="data-card">
-              <div class="data-card-header">
-                <h3 class="data-card-title">${doctor.name}</h3>
-                <span class="status-badge status-available">
-                  Available
-                </span>
-              </div>
-              <div class="data-card-body">
-                <div class="data-card-details">
-                  <div class="detail-item">
-                    <span class="detail-label">Specialization:</span>
-                    <span class="detail-value">${doctor.specialization}</span>
-                  </div>
-                  <div class="detail-item">
-                    <span class="detail-label">Hospital:</span>
-                    <span class="detail-value">${doctor.hospital}</span>
-                  </div>
-                  <div class="detail-item">
-                    <span class="detail-label">Availability:</span>
-                    <span class="detail-value">Mon-Fri, 9AM-5PM</span>
-                  </div>
+            <div class="hospital-body">
+              <div class="hospital-info">
+                <div class="info-row">
+                  <span class="info-label">Location:</span>
+                  <span class="info-value">Delhi</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Total Beds:</span>
+                  <span class="info-value">30</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Available:</span>
+                  <span class="info-value">0 beds</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Occupancy:</span>
+                  <span class="info-value">100%</span>
                 </div>
               </div>
-              <div class="data-card-footer">
-                <button class="btn btn-sm btn-outline" onclick="bookAppointment(${doctor.id})">
-                  <i class="fas fa-calendar-plus mr-1"></i> Book Appointment
-                </button>
-              </div>
             </div>
-          `;
-        });
-
-        html += '</div>';
-        container.innerHTML = html;
-      } catch (error) {
-        console.error('Error loading doctors:', error);
-        container.innerHTML = `
-          <div class="p-8 text-center text-red-500">
-            <i class="fas fa-exclamation-circle text-4xl mb-4"></i>
-            <p>Failed to load doctors. Please try again later.</p>
           </div>
-        `;
-      }
-    }
 
-    async function loadEquipments(search = "") {
-      const container = document.getElementById("contentArea");
-      
-      // Show loading state
-      container.innerHTML = `
-        <div class="p-8 text-center text-gray-500">
-          <i class="fas fa-spinner fa-spin text-4xl mb-4 text-blue-500"></i>
-          <p>Loading medical equipment...</p>
-        </div>
-      `;
-
-      try {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        const filteredEquipments = dummyEquipments.filter(equipment => 
-          equipment.name.toLowerCase().includes(search) || 
-          equipment.status.toLowerCase().includes(search) ||
-          equipment.location.toLowerCase().includes(search)
-        );
-
-        if (filteredEquipments.length === 0) {
-          container.innerHTML = `
-            <div class="p-8 text-center">
-              <i class="fas fa-cogs text-4xl mb-4 text-gray-300"></i>
-              <h3 class="text-lg font-medium text-gray-700">No equipment found</h3>
-              <p class="text-gray-500">Try adjusting your search criteria</p>
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <h3 class="hospital-name">Sunshine Medical</h3>
+              <span class="hospital-status status-available">Available</span>
             </div>
-          `;
-          return;
-        }
-
-        let html = `
-          <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-semibold text-gray-800">Medical Equipment</h2>
-            <span class="text-sm text-gray-500">${filteredEquipments.length} items found</span>
-          </div>
-          <div class="data-grid">
-        `;
-
-        filteredEquipments.forEach(equipment => {
-          const statusClass = equipment.status === 'available' ? 'status-available' : 
-                            equipment.status === 'in-use' ? 'status-warning' : 'status-danger';
-          
-          html += `
-            <div class="data-card">
-              <div class="data-card-header">
-                <h3 class="data-card-title">${equipment.name}</h3>
-                <span class="status-badge ${statusClass}">
-                  ${equipment.status.charAt(0).toUpperCase() + equipment.status.slice(1)}
-                </span>
-              </div>
-              <div class="data-card-body">
-                <div class="data-card-details">
-                  <div class="detail-item">
-                    <span class="detail-label">Location:</span>
-                    <span class="detail-value">${equipment.location}</span>
-                  </div>
-                  <div class="detail-item">
-                    <span class="detail-label">Status:</span>
-                    <span class="detail-value">${equipment.status.replace('-', ' ')}</span>
-                  </div>
-                  <div class="detail-item">
-                    <span class="detail-label">Last Maintenance:</span>
-                    <span class="detail-value">2 weeks ago</span>
-                  </div>
+            <div class="hospital-body">
+              <div class="hospital-info">
+                <div class="info-row">
+                  <span class="info-label">Location:</span>
+                  <span class="info-value">Bangalore, Karnataka</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Total Beds:</span>
+                  <span class="info-value">25</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Available:</span>
+                  <span class="info-value">5 beds</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Occupancy:</span>
+                  <span class="info-value">80%</span>
                 </div>
               </div>
-              <div class="data-card-footer">
-                <button class="btn btn-sm btn-outline" onclick="viewEquipmentDetails(${equipment.id})">
-                  <i class="fas fa-info-circle mr-1"></i> Details
-                </button>
-              </div>
             </div>
-          `;
-        });
-
-        html += '</div>';
-        container.innerHTML = html;
-      } catch (error) {
-        console.error('Error loading equipment:', error);
-        container.innerHTML = `
-          <div class="p-8 text-center text-red-500">
-            <i class="fas fa-exclamation-circle text-4xl mb-4"></i>
-            <p>Failed to load equipment. Please try again later.</p>
           </div>
-        `;
-      }
-    }
 
-    // Utility functions
-    function viewHospitalDetails(hospitalId) {
-      // Implement hospital details view
-      alert(`Viewing details for hospital ID: ${hospitalId}`);
-    }
-
-    function bookAppointment(doctorId) {
-      // Implement appointment booking
-      alert(`Booking appointment with doctor ID: ${doctorId}`);
-    }
-
-    function viewEquipmentDetails(equipmentId) {
-      // Implement equipment details view
-      alert(`Viewing details for equipment ID: ${equipmentId}`);
-    }
-
-    // Check authentication status
-    async function checkAuth() {
-      try {
-        const { data: { session }, error } = await supabaseClient.auth.getSession();
-        
-        if (error) throw error;
-        
-        // If no session, redirect to login
-        if (!session) {
-          window.location.href = 'login.html';
-          return false;
-        }
-        
-        return true;
-      } catch (error) {
-        console.error('Auth check failed:', error);
-        window.location.href = 'login.html';
-        return false;
-      }
-    }
-
-    // Navigation Functions
-    function showHospitals() {
-      setActiveNavLink('hospitals');
-      const content = document.querySelector('.dashboard-content');
-      content.innerHTML = `
-        <div class="dashboard-header">
-          <h1 class="dashboard-title">Hospitals</h1>
-          <p class="dashboard-subtitle">Manage hospital information and availability</p>
-        </div>
-        <div class="content-grid">
-          <div class="content-card">
-            <h3>Hospital List</h3>
-            <p>View and manage all registered hospitals</p>
-            <div class="hospital-list">
-              <div class="hospital-item">
-                <div class="hospital-info">
-                  <h4>City General Hospital</h4>
-                  <p>Available Beds: 45</p>
-                  <span class="status available">Available</span>
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <h3 class="hospital-name">Apollo Care Center</h3>
+              <span class="hospital-status status-available">Available</span>
+            </div>
+            <div class="hospital-body">
+              <div class="hospital-info">
+                <div class="info-row">
+                  <span class="info-label">Location:</span>
+                  <span class="info-value">Chennai, Tamil Nadu</span>
                 </div>
-              </div>
-              <div class="hospital-item">
-                <div class="hospital-info">
-                  <h4>Metro Medical Center</h4>
-                  <p>Available Beds: 12</p>
-                  <span class="status limited">Limited</span>
+                <div class="info-row">
+                  <span class="info-label">Total Beds:</span>
+                  <span class="info-value">60</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Available:</span>
+                  <span class="info-value">15 beds</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Occupancy:</span>
+                  <span class="info-value">75%</span>
                 </div>
               </div>
             </div>
@@ -1263,30 +984,63 @@
       `;
     }
 
-    function showDoctors() {
-      setActiveNavLink('doctors');
-      const content = document.querySelector('.dashboard-content');
-      content.innerHTML = `
-        <div class="dashboard-header">
-          <h1 class="dashboard-title">Doctors</h1>
-          <p class="dashboard-subtitle">Manage doctor profiles and schedules</p>
+    function getDoctorsContent() {
+      return `
+        <div class="section-header">
+          <h2 class="section-title">Available Doctors</h2>
+          <span class="showing-count">Showing 48 active doctors</span>
         </div>
-        <div class="content-grid">
-          <div class="content-card">
-            <h3>Doctor Directory</h3>
-            <div class="doctor-list">
-              <div class="doctor-item">
-                <div class="doctor-info">
-                  <h4>Dr. Sarah Johnson</h4>
-                  <p>Cardiologist - City General Hospital</p>
-                  <span class="status available">Available</span>
+        
+        <div class="hospitals-grid">
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <h3 class="hospital-name">Dr. Sarah Johnson</h3>
+              <span class="hospital-status status-available">Available</span>
+            </div>
+            <div class="hospital-body">
+              <div class="hospital-info">
+                <div class="info-row">
+                  <span class="info-label">Specialty:</span>
+                  <span class="info-value">Cardiology</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Experience:</span>
+                  <span class="info-value">15 years</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Hospital:</span>
+                  <span class="info-value">City General Hospital</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Next Available:</span>
+                  <span class="info-value">Today 2:00 PM</span>
                 </div>
               </div>
-              <div class="doctor-item">
-                <div class="doctor-info">
-                  <h4>Dr. Michael Chen</h4>
-                  <p>Emergency Medicine - Metro Medical</p>
-                  <span class="status busy">Busy</span>
+            </div>
+          </div>
+
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <h3 class="hospital-name">Dr. Michael Chen</h3>
+              <span class="hospital-status status-occupied">Busy</span>
+            </div>
+            <div class="hospital-body">
+              <div class="hospital-info">
+                <div class="info-row">
+                  <span class="info-label">Specialty:</span>
+                  <span class="info-value">Neurology</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Experience:</span>
+                  <span class="info-value">12 years</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Hospital:</span>
+                  <span class="info-value">Metro Health Center</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Next Available:</span>
+                  <span class="info-value">Tomorrow 9:00 AM</span>
                 </div>
               </div>
             </div>
@@ -1295,191 +1049,151 @@
       `;
     }
 
+    function getEquipmentsContent() {
+      return `
+        <div class="section-header">
+          <h2 class="section-title">Medical Equipment Status</h2>
+          <span class="showing-count">Monitoring critical equipment</span>
+        </div>
+        
+        <div class="hospitals-grid">
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <h3 class="hospital-name">MRI Machine</h3>
+              <span class="hospital-status status-available">Operational</span>
+            </div>
+            <div class="hospital-body">
+              <div class="hospital-info">
+                <div class="info-row">
+                  <span class="info-label">Location:</span>
+                  <span class="info-value">City General Hospital</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Status:</span>
+                  <span class="info-value">Active</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Last Maintenance:</span>
+                  <span class="info-value">2 weeks ago</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Utilization:</span>
+                  <span class="info-value">85%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <h3 class="hospital-name">CT Scanner</h3>
+              <span class="hospital-status status-occupied">Under Maintenance</span>
+            </div>
+            <div class="hospital-body">
+              <div class="hospital-info">
+                <div class="info-row">
+                  <span class="info-label">Location:</span>
+                  <span class="info-value">Metro Health Center</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Status:</span>
+                  <span class="info-value">Maintenance</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Expected Completion:</span>
+                  <span class="info-value">Tomorrow</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Technician:</span>
+                  <span class="info-value">John Smith</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Additional functions
     function showAppointments() {
-      setActiveNavLink('appointments');
-      const content = document.querySelector('.dashboard-content');
-      content.innerHTML = `
+      document.getElementById('mainContent').innerHTML = `
         <div class="dashboard-header">
           <h1 class="dashboard-title">Appointments</h1>
-          <p class="dashboard-subtitle">Manage patient appointments and schedules</p>
+          <p class="dashboard-subtitle">Manage all hospital appointments</p>
         </div>
-        <div class="content-grid">
-          <div class="content-card">
-            <h3>Today's Appointments</h3>
-            <div class="appointment-list">
-              <div class="appointment-item">
-                <div class="appointment-info">
-                  <h4>John Doe - Dr. Sarah Johnson</h4>
-                  <p>Cardiology Consultation - 10:00 AM</p>
-                  <span class="status confirmed">Confirmed</span>
-                </div>
-              </div>
-              <div class="appointment-item">
-                <div class="appointment-info">
-                  <h4>Jane Smith - Dr. Michael Chen</h4>
-                  <p>Emergency Check-up - 2:30 PM</p>
-                  <span class="status pending">Pending</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="content-area">
+          <h2>Appointment Management System</h2>
+          <p>This section would contain appointment scheduling and management features.</p>
         </div>
       `;
     }
 
     function showEmergency() {
-      setActiveNavLink('emergency');
-      const content = document.querySelector('.dashboard-content');
-      content.innerHTML = `
+      document.getElementById('mainContent').innerHTML = `
         <div class="dashboard-header">
           <h1 class="dashboard-title">Emergency</h1>
-          <p class="dashboard-subtitle">Emergency services and urgent care management</p>
+          <p class="dashboard-subtitle">Emergency response and management</p>
         </div>
-        <div class="content-grid">
-          <div class="content-card emergency">
-            <h3>Emergency Status</h3>
-            <div class="emergency-info">
-              <div class="emergency-stat">
-                <span class="emergency-number">3</span>
-                <span class="emergency-label">Active Emergencies</span>
-              </div>
-              <div class="emergency-stat">
-                <span class="emergency-number">12</span>
-                <span class="emergency-label">Available Ambulances</span>
-              </div>
-            </div>
-          </div>
+        <div class="content-area">
+          <h2>Emergency Response Center</h2>
+          <p>This section would contain emergency management and response features.</p>
         </div>
       `;
     }
 
     function showSettings() {
-      setActiveNavLink('settings');
-      const content = document.querySelector('.dashboard-content');
-      content.innerHTML = `
+      document.getElementById('mainContent').innerHTML = `
         <div class="dashboard-header">
           <h1 class="dashboard-title">Settings</h1>
-          <p class="dashboard-subtitle">Configure your account and system preferences</p>
+          <p class="dashboard-subtitle">System configuration and preferences</p>
         </div>
-        <div class="content-grid">
-          <div class="content-card">
-            <h3>Account Settings</h3>
-            <div class="settings-group">
-              <div class="setting-item">
-                <label>Email Notifications</label>
-                <input type="checkbox" checked>
-              </div>
-              <div class="setting-item">
-                <label>SMS Alerts</label>
-                <input type="checkbox">
-              </div>
-              <div class="setting-item">
-                <label>Theme</label>
-                <select>
-                  <option>Light</option>
-                  <option>Dark</option>
-                </select>
-              </div>
-            </div>
-          </div>
+        <div class="content-area">
+          <h2>System Settings</h2>
+          <p>This section would contain system configuration options.</p>
         </div>
       `;
     }
 
-    function showProfile() {
-      const content = document.querySelector('.dashboard-content');
-      content.innerHTML = `
-        <div class="dashboard-header">
-          <h1 class="dashboard-title">Profile</h1>
-          <p class="dashboard-subtitle">Manage your profile information</p>
-        </div>
-        <div class="content-grid">
-          <div class="content-card">
-            <h3>Personal Information</h3>
-            <div class="profile-form">
-              <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" value="Admin User" readonly>
-              </div>
-              <div class="form-group">
-                <label>Email</label>
-                <input type="email" value="admin@mediassist.com" readonly>
-              </div>
-              <div class="form-group">
-                <label>Role</label>
-                <input type="text" value="Administrator" readonly>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function setActiveNavLink(section) {
-      // Remove active class from all nav links
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-      });
-      
-      // Add active class to current section
-      const navLinks = {
-        'hospitals': document.querySelector('a[onclick="showHospitals(); return false;"]'),
-        'doctors': document.querySelector('a[onclick="showDoctors(); return false;"]'),
-        'appointments': document.querySelector('a[onclick="showAppointments(); return false;"]'),
-        'emergency': document.querySelector('a[onclick="showEmergency(); return false;"]'),
-        'settings': document.querySelector('a[onclick="showSettings(); return false;"]')
-      };
-      
-      if (navLinks[section]) {
-        navLinks[section].classList.add('active');
-      }
+    // Notification and user menu functions
+    function toggleNotifications() {
+      console.log('Notifications clicked');
+      // Add notification dropdown logic here
     }
 
     function toggleUserMenu() {
-      const dropdown = document.getElementById('userDropdown');
-      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+      console.log('User menu clicked');
+      // Add user menu dropdown logic here
     }
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(event) {
-      const userMenu = document.querySelector('.user-menu');
-      const dropdown = document.getElementById('userDropdown');
+    // Search functionality
+    function handleSearch(event) {
+      if (event.key === 'Enter') {
+        const searchTerm = event.target.value.trim();
+        if (searchTerm) {
+          console.log('Searching for:', searchTerm);
+          // Implement search logic
+        }
+      }
+    }
+
+    // Initialize dashboard
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set default tab
+      switchContentTab('hospitals');
       
-      if (!userMenu.contains(event.target)) {
-        dropdown.style.display = 'none';
+      // Add mobile menu toggle if needed
+      const sidebar = document.getElementById('sidebar');
+      if (window.innerWidth <= 1024) {
+        // Add mobile functionality
       }
     });
 
-    async function logout() {
-      try {
-        await supabaseClient.auth.signOut();
-        window.location.href = 'login.html';
-      } catch (error) {
-        console.error('Logout error:', error);
-        window.location.href = 'login.html';
-      }
-    }
-
-    // Initialize the dashboard
-    document.addEventListener('DOMContentLoaded', async function() {
-      // Check authentication first
-      const isAuthenticated = await checkAuth();
-      if (!isAuthenticated) return;
-      
-      // Set up event listeners for tabs
-      document.querySelectorAll('.content-tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-          const tabName = this.getAttribute('data-tab');
-          switchTab(tabName);
-        });
-      });
-      
-      // Set up search functionality
-      const searchInput = document.getElementById('searchInput');
-      if (searchInput) {
-        searchInput.addEventListener('input', function() {
-          applyFilter();
-        });
+    // Handle responsive behavior
+    window.addEventListener('resize', function() {
+      // Handle responsive changes
+      const sidebar = document.getElementById('sidebar');
+      if (window.innerWidth > 1024) {
+        sidebar.classList.remove('active');
       }
     });
   </script>
