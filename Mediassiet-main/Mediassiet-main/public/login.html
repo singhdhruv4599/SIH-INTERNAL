@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login | MediAssist</title>
 
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Supabase -->
@@ -21,6 +23,31 @@
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
     .glow{box-shadow:0 15px 40px rgba(30,144,255,.18)}
     .lift:hover{transform:translateY(-2px)}
+    
+    /* Password toggle styles */
+    .password-wrapper {
+      position: relative;
+    }
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: color 0.2s;
+    }
+    .password-toggle:hover {
+      color: #2563eb;
+    }
+    .password-toggle:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
@@ -107,7 +134,12 @@
             <label class="block text-sm font-medium mb-1">Email</label>
             <input id="email" type="email" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-sky-400 outline-none" placeholder="you@email.com">
             <label class="block text-sm font-medium mb-1 mt-3">Password</label>
-            <input id="password" type="password" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-sky-400 outline-none" placeholder="********">
+            <div class="password-wrapper">
+              <input id="password" type="password" class="w-full border rounded-xl p-3 pr-10 focus:ring-2 focus:ring-sky-400 outline-none" placeholder="********">
+              <button type="button" class="password-toggle" data-target="password">
+                <i class="far fa-eye"></i>
+              </button>
+            </div>
           </div>
 
           <!-- doctor -->
@@ -115,7 +147,12 @@
             <label class="block text-sm font-medium mb-1">Email</label>
             <input id="doctorEmail" type="email" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-emerald-400 outline-none" placeholder="doctor@email.com">
             <label class="block text-sm font-medium mb-1 mt-3">Password</label>
-            <input id="doctorPassword" type="password" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-emerald-400 outline-none" placeholder="********">
+            <div class="password-wrapper">
+              <input id="doctorPassword" type="password" class="w-full border rounded-xl p-3 pr-10 focus:ring-2 focus:ring-emerald-400 outline-none" placeholder="********">
+              <button type="button" class="password-toggle" data-target="doctorPassword">
+                <i class="far fa-eye"></i>
+              </button>
+            </div>
           </div>
 
           <!-- hospital -->
@@ -123,7 +160,12 @@
             <label class="block text-sm font-medium mb-1">Email</label>
             <input id="hospitalEmail" type="email" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-fuchsia-400 outline-none" placeholder="hospital@email.com">
             <label class="block text-sm font-medium mb-1 mt-3">Password</label>
-            <input id="hospitalPassword" type="password" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-fuchsia-400 outline-none" placeholder="********">
+            <div class="password-wrapper">
+              <input id="hospitalPassword" type="password" class="w-full border rounded-xl p-3 pr-10 focus:ring-2 focus:ring-fuchsia-400 outline-none" placeholder="********">
+              <button type="button" class="password-toggle" data-target="hospitalPassword">
+                <i class="far fa-eye"></i>
+              </button>
+            </div>
           </div>
 
           <button type="submit"
@@ -138,6 +180,30 @@
     </div>
   </div>
 
+  <script>
+    // Password toggle functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add click event to all password toggle buttons
+      document.querySelectorAll('.password-toggle').forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const passwordInput = document.getElementById(targetId);
+          const icon = this.querySelector('i');
+          
+          // Toggle password visibility
+          if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+          } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+          }
+        });
+      });
+    });
+  </script>
   <script src="js/login.js" defer></script>
 </body>
 </html>
