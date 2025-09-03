@@ -5,76 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Doctor Dashboard - MediAssist</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    :root{
-      --primary:#7c3aed; --secondary:#10b981; --danger:#ef4444; --muted:#64748b;
-      --bg:#f8fafc; --card:#ffffff;
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #f8fafc;
     }
-    body{font-family:'Inter',system-ui,Arial;background:var(--bg);color:#0f172a;margin:0}
-    .app-container{display:flex;min-height:100vh}
-    .sidebar{
-      width:260px;background:var(--card);box-shadow:0 4px 20px rgba(2,6,23,.08);padding:1.5rem;
-      background-image: radial-gradient(120px 120px at 20% 0%, #f3e8ff 10%, transparent 40%);
+    .nav-link.active {
+      background-color: #eff6ff;
+      color: #2563eb;
     }
-    .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--primary);font-weight:800}
-    .brand-logo{width:36px;height:36px;background:var(--primary);color:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800}
-    .nav-menu{list-style:none;padding:0;margin-top:1rem}
-    .nav-link{display:flex;align-items:center;gap:.75rem;padding:.65rem .9rem;border-radius:.6rem;color:#334155;text-decoration:none;margin-bottom:.35rem}
-    .nav-link.active, .nav-link:hover{background:#f3e8ff;color:var(--primary)}
-    .main-content{flex:1;overflow:auto}
-    .top-bar{background:var(--card);padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 2px rgba(2,6,23,.04);position:sticky;top:0;z-index:30}
-    .search-input{width:100%;padding:.6rem 1rem;border:1px solid #e6edf9;border-radius:.6rem}
-    .dashboard-content{padding:2rem}
-    .dashboard-header{margin-bottom:1.25rem}
-    .dashboard-title{font-size:1.6rem;font-weight:800}
-    .data-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
-    .data-card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(2,6,23,.04)}
-    .data-card-header{padding:1rem;border-bottom:1px solid #eef2f6;display:flex;justify-content:space-between;align-items:center}
-    .data-card-body{padding:1rem}
-    .badge{padding:.25rem .6rem;border-radius:999px;font-weight:700;font-size:.8rem}
-    .badge-green{background:#dcfce7;color:#166534}
-    .btn{padding:.5rem .9rem;border-radius:.6rem;border:none;background:var(--primary);color:white;font-weight:700;cursor:pointer}
-    .btn-outline{background:transparent;border:1px solid #e6edf9;color:#0f172a;padding:.45rem .8rem;border-radius:.6rem}
-    .avatar{width:44px;height:44px;border-radius:999px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
-    @media (max-width:900px){ .sidebar{display:none} .app-container{flex-direction:column} .top-bar{position:relative} }
+    .nav-link:hover {
+      background-color: #f1f5f9;
+      color: #2563eb;
+    }
+    .dashboard-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
   </style>
 </head>
-<body>
-  <div class="app-container">
-    <aside class="sidebar">
-      <a class="brand" href="#"><div class="brand-logo">MA</div><div>MediAssist</div></a>
-      <p style="color:var(--muted);margin-top:.5rem;font-size:.9rem">Doctor dashboard</p>
-      <nav>
-        <ul class="nav-menu">
-          <li><a href="#" class="nav-link active" onclick="showToday();return false;"><i class="fa-regular fa-calendar"></i> Today</a></li>
-          <li><a href="#" class="nav-link" onclick="showAppointments();return false;"><i class="fa-solid fa-list-check"></i> Appointments</a></li>
-          <li><a href="#" class="nav-link" onclick="showPatients();return false;"><i class="fa-solid fa-user-group"></i> Patients</a></li>
-          <li><a href="#" class="nav-link" onclick="showProfile();return false;"><i class="fa-regular fa-user"></i> Profile</a></li>
-          <li><a href="#" class="nav-link" onclick="showSettings();return false;"><i class="fa-solid fa-gear"></i> Settings</a></li>
+<body class="text-slate-800">
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md p-5 hidden md:block">
+      <a href="#" class="flex items-center gap-2 text-blue-600 font-extrabold text-xl">
+        <div class="h-10 w-10 flex items-center justify-center bg-blue-600 text-white rounded-lg">MA</div>
+        MediAssist
+      </a>
+      <p class="text-slate-500 text-sm mt-2">Doctor Dashboard</p>
+
+      <nav class="mt-6">
+        <ul class="space-y-1">
+          <li><a href="#" class="nav-link active flex items-center gap-2 rounded-lg px-3 py-2" onclick="showToday();return false;"><i class="fa-regular fa-calendar"></i> Today</a></li>
+          <li><a href="#" class="nav-link flex items-center gap-2 rounded-lg px-3 py-2" onclick="showAppointments();return false;"><i class="fa-solid fa-list-check"></i> Appointments</a></li>
+          <li><a href="#" class="nav-link flex items-center gap-2 rounded-lg px-3 py-2" onclick="showPatients();return false;"><i class="fa-solid fa-user-group"></i> Patients</a></li>
+          <li><a href="#" class="nav-link flex items-center gap-2 rounded-lg px-3 py-2" onclick="showProfile();return false;"><i class="fa-regular fa-user"></i> Profile</a></li>
+          <li><a href="#" class="nav-link flex items-center gap-2 rounded-lg px-3 py-2" onclick="showSettings();return false;"><i class="fa-solid fa-gear"></i> Settings</a></li>
         </ul>
       </nav>
     </aside>
 
-    <main class="main-content">
-      <header class="top-bar">
-        <div style="flex:1;max-width:640px">
-          <input id="docSearch" class="search-input" placeholder="Search patient or appointment..." oninput="filterAppointments()" />
+    <!-- Main content -->
+    <main class="flex-1 flex flex-col">
+      <!-- Topbar -->
+      <header class="bg-white shadow-sm px-5 py-3 flex justify-between items-center sticky top-0 z-20">
+        <div class="flex-1 max-w-lg">
+          <input id="docSearch" class="w-full px-4 py-2 border border-slate-200 rounded-lg text-sm" placeholder="Search patient or appointment..." />
         </div>
-        <div style="display:flex;align-items:center;gap:1rem">
-          <button class="btn-outline" onclick="location.href='patient-dashboard.html'">Patient View</button>
-          <button class="btn-outline" onclick="location.href='hospital-dashboard.html'">Hospital View</button>
-          <button class="btn" onclick="Auth.signOut()">Logout</button>
+        <div class="flex items-center gap-3 ml-4">
+          <button class="px-3 py-2 rounded-lg border border-slate-200 text-sm hover:bg-slate-50" onclick="location.href='patient-dashboard.html'">Patient View</button>
+          <button class="px-3 py-2 rounded-lg border border-slate-200 text-sm hover:bg-slate-50" onclick="location.href='hospital-dashboard.html'">Hospital View</button>
+          <button class="px-3 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700" onclick="Auth.signOut()">Logout</button>
         </div>
       </header>
 
-      <section class="dashboard-content" id="docContent"></section>
+      <!-- Content -->
+      <section id="docContent" class="p-6 overflow-y-auto"></section>
     </main>
   </div>
 
+  <!-- Supabase & JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/config.js"></script>
   <script src="js/auth.js"></script>
