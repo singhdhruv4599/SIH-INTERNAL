@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hospital Dashboard - MediAssist</title>
+
+  <!-- icons + fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind utilities (optional) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Local CSS (inline so it's copyable & identical style to Patient) -->
+  <style>
+    :root{
+      /* Green theme for Hospital */
+      --primary:#10b981; --secondary:#2563eb; --danger:#ef4444; --muted:#64748b;
+      --bg:#f8fafc; --card:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{font-family:'Inter',system-ui,Arial;background:var(--bg);color:#0f172a;margin:0}
+    .app-container{display:flex;min-height:100vh}
+    /* Sidebar gets green accent for hospital */
+    .sidebar{width:260px;background:var(--card);box-shadow:0 4px 20px rgba(2,6,23,.08);padding:1.5rem;border-right:6px solid rgba(16,185,129,.15)}
+    .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--primary);font-weight:700}
+    .brand-logo{width:36px;height:36px;background:var(--primary);color:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .nav-menu{list-style:none;padding:0;margin-top:1rem}
+    .nav-link{display:flex;align-items:center;gap:.75rem;padding:.65rem .9rem;border-radius:.6rem;color:#334155;text-decoration:none;margin-bottom:.35rem}
+    .nav-link.active, .nav-link:hover{background:#ecfdf5;color:#065f46}
+    .main-content{flex:1;overflow:auto}
+    .top-bar{background:var(--card);padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 2px rgba(2,6,23,.04);position:sticky;top:0;z-index:30}
+    .search-input{width:100%;padding:.6rem 1rem;border:1px solid #e6edf9;border-radius:.6rem}
+    .dashboard-content{padding:2rem}
+    .dashboard-header{margin-bottom:1.25rem}
+    .dashboard-title{font-size:1.6rem;font-weight:700}
+    .dashboard-subtitle{color:var(--muted)}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .stat-card{background:var(--card);border-radius:12px;padding:1rem;box-shadow:0 6px 20px rgba(2,6,23,.04);border-left:4px solid var(--primary)}
+    .data-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+    .data-card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(2,6,23,.04)}
+    .data-card-header{padding:1rem;border-bottom:1px solid #eef2f6;display:flex;justify-content:space-between;align-items:center}
+    .data-card-body{padding:1rem}
+    .status-badge{padding:.25rem .6rem;border-radius:999px;font-weight:600;font-size:.85rem}
+    .status-available{background:#dcfce7;color:#166534}
+    .status-full{background:#fee2e2;color:#991b1b}
+    .btn{padding:.5rem .9rem;border-radius:.6rem;border:none;background:var(--primary);color:white;font-weight:600;cursor:pointer}
+    .btn-outline{background:transparent;border:1px solid #e6edf9;color:#0f172a;padding:.45rem .8rem;border-radius:.6rem}
+    .card-list-item{display:block;padding:.75rem 1rem;border-bottom:1px dashed #f1f5f9;text-decoration:none;color:inherit}
+    .profile-box{display:flex;align-items:center;gap:1rem}
+    .avatar{width:44px;height:44px;border-radius:999px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+    @media (max-width:900px){ .sidebar{display:none} .app-container{flex-direction:column} .top-bar{position:relative} }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a class="brand" href="#">
+          <div class="brand-logo">MA</div>
+          <div>MediAssist</div>
+        </a>
+        <p style="color:var(--muted);margin-top:.5rem;font-size:.9rem">Hospital dashboard</p>
+      </div>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link active" onclick="showOverview(); return false;"><i class="fas fa-gauge"></i> Overview</a></li>
+          <li><a href="#" class="nav-link" onclick="showBeds(); return false;"><i class="fas fa-bed"></i> Beds</a></li>
+          <li><a href="#" class="nav-link" onclick="showEquipment(); return false;"><i class="fas fa-stethoscope"></i> Equipment</a></li>
+          <li><a href="#" class="nav-link" onclick="showStaff(); return false;"><i class="fas fa-user-md"></i> Staff</a></li>
+          <li><a href="#" class="nav-link" onclick="showSettings(); return false;"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+      <!-- Top bar -->
+      <header class="top-bar">
+        <div style="flex:1;max-width:720px">
+          <input id="globalSearch" class="search-input" placeholder="Search beds, equipment, staff..." oninput="applyFilter()" />
+        </div>
+
+        <div style="display:flex;align-items:center;gap:1rem">
+          <div style="position:relative">
+            <button class="btn-outline" onclick="showNotifications()"> <i class="fas fa-bell"></i> <span id="notifCount" style="margin-left:.4rem;color:var(--muted)">0</span></button>
+          </div>
+
+          <div style="position:relative">
+            <div onclick="toggleUserMenu()" style="display:flex;align-items:center;gap:.6rem;cursor:pointer">
+              <div id="userAvatar" class="avatar">H</div>
+              <div style="text-align:left">
+                <div id="userName" style="font-weight:700">Hospital Admin</div>
+                <div style="font-size:.85rem;color:var(--muted)" id="userEmail">admin@hospital.com</div>
+              </div>
+            </div>
+            <div id="userDropdown" style="display:none;position:absolute;right:0;top:56px;background:var(--card);box-shadow:0 6px 20px rgba(2,6,23,.08);border-radius:8px;overflow:hidden;min-width:180px">
+              <a href="#" class="card-list-item" onclick="showSettings(); return false;">Settings</a>
+              <a href="#" class="card-list-item" onclick="logout(); return false;" style="color:var(--danger)">Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <section class="dashboard-content" id="contentArea">
+        <!-- content loaded by JS -->
+      </section>
+    </main>
+  </div>
+
+  <!-- scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/hospital-dashboard.js"></script>
+</body>
+</html>
