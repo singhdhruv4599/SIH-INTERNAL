@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | MediAssist</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase -->
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+
+  <!-- App core -->
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+
+  <style>
+    .blob{filter:saturate(120%) blur(0px); opacity:.75}
+    .float-slow{animation: float 8s ease-in-out infinite}
+    .float-fast{animation: float 5s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+    .glow{box-shadow:0 15px 40px rgba(30,144,255,.18)}
+    .lift:hover{transform:translateY(-2px)}
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
+
+  <!-- background blobs -->
+  <svg class="absolute -top-24 -left-24 w-[36rem] blob float-slow" viewBox="0 0 200 200">
+    <path fill="#93C5FD" d="M40.7,-59.1C52.4,-50.1,62.8,-39.1,69.5,-25.5C76.3,-11.9,79.5,4.2,74.6,18.6C69.7,33,56.7,45.6,42.4,55.9C28.1,66.2,12.5,74.2,-2.3,77.3C-17.1,80.3,-34.3,78.5,-47.5,69.8C-60.8,61.1,-70.2,45.5,-76.9,28.7C-83.6,11.8,-87.6,-6.4,-84.3,-24.3C-81,-42.2,-70.4,-59.9,-55.3,-69.4C-40.1,-78.9,-20.1,-80.2,-2.3,-76.9C15.5,-73.6,31.1,-65.1,40.7,-59.1Z" transform="translate(100 100)"/>
+  </svg>
+  <svg class="absolute -bottom-28 -right-28 w-[34rem] blob float-fast" viewBox="0 0 200 200">
+    <path fill="#A7F3D0" d="M31.5,-55.6C42.2,-48.5,52.2,-42.1,60.3,-33C68.5,-24,74.9,-12,75.5,0.3C76.1,12.7,71,25.3,62.6,34.9C54.2,44.4,42.5,50.8,31.1,57.8C19.7,64.7,9.8,72.2,-1.2,74.4C-12.2,76.6,-24.5,73.6,-36.2,68C-47.9,62.4,-59,54.2,-65.2,43.2C-71.4,32.3,-72.6,18.6,-72.7,5.2C-72.9,-8.2,-71.9,-21.4,-66.2,-33.1C-60.5,-44.8,-49.9,-55,-38.1,-62.1C-26.2,-69.3,-13.1,-73.4,-1.6,-70.8C9.9,-68.2,19.8,-59,31.5,-55.6Z" transform="translate(100 100)"/>
+  </svg>
+
+  <div class="w-full max-w-6xl bg-white rounded-3xl overflow-hidden shadow-xl glow relative">
+    <div class="grid md:grid-cols-2">
+
+      <!-- LEFT: dynamic brand panel -->
+      <div id="brandPanel" class="relative p-10 md:p-12 bg-gradient-to-br from-sky-100 via-white to-emerald-100">
+        <div id="brandParallax" class="relative">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 grid place-items-center text-white font-black">MA</div>
+            <div>
+              <h1 class="text-2xl md:text-3xl font-black text-sky-800">MediAssist</h1>
+              <p class="text-sky-600 -mt-1">Care made simple.</p>
+            </div>
+          </div>
+
+          <img id="roleImg" class="w-36 h-36 md:w-40 md:h-40 mx-auto mb-4 drop-shadow-lg transition-all duration-300"
+               src="https://img.icons8.com/color/128/clinic.png" alt="role" />
+
+          <h2 id="roleTitle" class="text-2xl md:text-3xl font-extrabold text-sky-900 text-center">
+            Welcome to MediAssist
+          </h2>
+          <p id="roleTagline" class="text-sky-700 text-center mt-2">
+            Choose your role to continue
+          </p>
+
+          <div id="roleExtra" class="hidden mt-4 text-center">
+            <span class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-red-50 text-red-600 font-semibold">
+              ⚡ 24×7 Emergency Support
+            </span>
+          </div>
+
+          <div class="mt-8 grid grid-cols-2 gap-3 text-sm">
+            <div class="lift p-3 rounded-xl bg-white/70 border border-sky-100">
+              <div class="font-semibold text-sky-800">Smart Search</div>
+              <div class="text-sky-600">Find hospitals & doctors fast</div>
+            </div>
+            <div class="lift p-3 rounded-xl bg-white/70 border border-sky-100">
+              <div class="font-semibold text-sky-800">One-Tap Booking</div>
+              <div class="text-sky-600">Instant appointment slots</div>
+            </div>
+            <div class="lift p-3 rounded-xl bg-white/70 border border-sky-100">
+              <div class="font-semibold text-sky-800">Secure</div>
+              <div class="text-sky-600">Supabase Auth protected</div>
+            </div>
+            <div class="lift p-3 rounded-xl bg-white/70 border border-sky-100">
+              <div class="font-semibold text-sky-800">Live Status</div>
+              <div class="text-sky-600">Beds & equipment updates</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: form -->
+      <div class="p-8 md:p-12">
+        <h2 class="text-3xl font-extrabold text-sky-800 text-center mb-8">Login</h2>
+
+        <!-- role selector -->
+        <div class="grid grid-cols-3 gap-3 mb-8">
+          <button id="card-patient" class="role-card lift border-2 rounded-2xl py-4 font-semibold text-sky-700 hover:shadow-md transition">
+            Patient
+          </button>
+          <button id="card-doctor" class="role-card lift border-2 rounded-2xl py-4 font-semibold text-emerald-700 hover:shadow-md transition">
+            Doctor
+          </button>
+          <button id="card-hospital" class="role-card lift border-2 rounded-2xl py-4 font-semibold text-fuchsia-700 hover:shadow-md transition">
+            Hospital
+          </button>
+        </div>
+
+        <form id="loginForm" class="space-y-4">
+          <!-- patient -->
+          <div id="patientForm" class="form-section">
+            <label class="block text-sm font-medium mb-1">Email</label>
+            <input id="email" type="email" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-sky-400 outline-none" placeholder="you@email.com">
+            <label class="block text-sm font-medium mb-1 mt-3">Password</label>
+            <input id="password" type="password" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-sky-400 outline-none" placeholder="********">
+          </div>
+
+          <!-- doctor -->
+          <div id="doctorForm" class="form-section hidden">
+            <label class="block text-sm font-medium mb-1">Email</label>
+            <input id="doctorEmail" type="email" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-emerald-400 outline-none" placeholder="doctor@email.com">
+            <label class="block text-sm font-medium mb-1 mt-3">Password</label>
+            <input id="doctorPassword" type="password" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-emerald-400 outline-none" placeholder="********">
+          </div>
+
+          <!-- hospital -->
+          <div id="hospitalForm" class="form-section hidden">
+            <label class="block text-sm font-medium mb-1">Email</label>
+            <input id="hospitalEmail" type="email" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-fuchsia-400 outline-none" placeholder="hospital@email.com">
+            <label class="block text-sm font-medium mb-1 mt-3">Password</label>
+            <input id="hospitalPassword" type="password" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-fuchsia-400 outline-none" placeholder="********">
+          </div>
+
+          <button type="submit"
+                  class="w-full bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-xl p-3 font-bold shadow-md transition">
+            Continue
+          </button>
+          <p class="text-center text-sm text-slate-500">
+            New here? <a href="signup.html" class="text-sky-700 font-semibold underline">Create account</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/login.js" defer></script>
+</body>
+</html>
