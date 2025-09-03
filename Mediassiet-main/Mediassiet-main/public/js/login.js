@@ -63,8 +63,29 @@
     });
     brand.addEventListener("mouseleave", () => parallax.style.transform = "translate(0,0)");
   
+    // Function to show error message
+    function showError(message) {
+      const errorContainer = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      
+      errorText.textContent = message;
+      errorContainer.classList.remove('hidden');
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        errorContainer.classList.add('hidden');
+      }, 5000);
+    }
+    
+    // Function to clear error message
+    function clearError() {
+      const errorContainer = document.getElementById('errorMessage');
+      errorContainer.classList.add('hidden');
+    }
+    
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+      clearError(); // Clear any previous errors
   
       let email = "", pwd = "";
       if (activeRole === "patient") {
@@ -78,26 +99,69 @@
         pwd = document.getElementById("hospitalPassword").value.trim();
       }
   
-      if (!email || !pwd) return alert("Please enter email & password");
+      if (!email || !pwd) {
+        showError("Please enter both email and password");
+        return;
+      }
+      
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showError("Please enter a valid email address");
+        return;
+      }
   
       try {
         const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pwd });
-        if (error) throw error;
-        if (!data?.user) throw new Error("Login failed");
+        
+        if (error) {
+          // Handle specific error cases
+          if (error.message.includes('Invalid login credentials')) {
+            showError("Invalid email or password. Please try again.");
+          } else if (error.message.includes('Email not confirmed')) {
+            showError("Please verify your email before logging in.");
+          } else {
+            throw error;
+          }
+          return;
+        }
+        
+        if (!data?.user) throw new Error("Login failed. Please try again.");
   
         let role = data.user.user_metadata?.role;
         if (!role) {
-          const { data: profile } = await supabaseClient.from("profiles").select("role").eq("id", data.user.id).single();
+          const { data: profile, error: profileError } = await supabaseClient
+            .from("profiles")
+            .select("role")
+            .eq("id", data.user.id)
+            .single();
+            
+          if (profileError) {
+            console.error("Profile error:", profileError);
+            showError("Error loading your profile. Please try again.");
+            return;
+          }
           role = profile?.role || "patient";
         }
-  
-        if (role === "doctor") window.location.href = "doctor-dashboard.html";
-        else if (role === "hospital") window.location.href = "hospital-dashboard.html";
-        else window.location.href = "patient-dashboard.html";
+        
+        // Clear any existing error before redirecting
+        clearError();
+        
+        // Redirect based on role
+        switch(role) {
+          case "doctor":
+            window.location.href = "doctor-dashboard.html";
+            break;
+          case "hospital":
+            window.location.href = "hospital-dashboard.html";
+            break;
+          default:
+            window.location.href = "patient-dashboard.html";
+        }
+        
       } catch (err) {
-        console.error("Login error:", err.message);
-        alert(err.message || "Login failed");
+        console.error("Login error:", err);
+        showError(err.message || "An unexpected error occurred. Please try again.");
       }
     });
   })();
-  
