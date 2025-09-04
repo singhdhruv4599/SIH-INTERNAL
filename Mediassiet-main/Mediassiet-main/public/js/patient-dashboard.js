@@ -21,9 +21,13 @@ let dummyAppointments = [
 ];
 
 // --------- Nav Active ---------
-function setActiveNav(name){
-  document.querySelectorAll(".nav-link").forEach(el=>el.classList.remove("active"));
-  [...document.querySelectorAll(".nav-link")].find(l=>l.textContent.trim().includes(name))?.classList.add("active");
+function setActiveNav(name) {
+  document.querySelectorAll(".nav-link").forEach(el => el.classList.remove("active"));
+  const activeLink = [...document.querySelectorAll(".nav-link")].find(l => 
+    l.textContent.trim().includes(name) || 
+    (name === 'Dashboard' && l.querySelector('i.fa-house'))
+  );
+  if (activeLink) activeLink.classList.add("active");
 }
 
 // --------- Hospitals ---------
@@ -193,7 +197,108 @@ function toggleUserMenu(){
 function showNotifications(){ alert("No new notifications"); }
 function logout(){ alert("Logged out!"); }
 
-// --------- Init ---------
-document.addEventListener("DOMContentLoaded",()=>{
-  showHospitals();
+// --------- Dashboard View ---------
+function showDashboard() {
+  setActiveNav("Dashboard");
+  const container = document.getElementById("contentArea");
+  container.innerHTML = `
+    <h2 style="font-weight:700;margin:18px 0">Dashboard Overview</h2>
+    <p>Welcome to your dashboard. Select an option from the menu to get started.</p>
+    <div class="data-grid" style="margin-top: 20px;">
+      <div class="data-card" style="cursor:pointer" onclick="showHospitals()">
+        <div class="data-card-body" style="text-align:center">
+          <i class="fa-solid fa-hospital" style="font-size:2rem;color:var(--brand);margin-bottom:10px"></i>
+          <h3>Hospitals</h3>
+          <p>Find and book hospitals near you</p>
+        </div>
+      </div>
+      <div class="data-card" style="cursor:pointer" onclick="showDoctors()">
+        <div class="data-card-body" style="text-align:center">
+          <i class="fa-solid fa-user-doctor" style="font-size:2rem;color:var(--brand);margin-bottom:10px"></i>
+          <h3>Doctors</h3>
+          <p>Book appointments with specialists</p>
+        </div>
+      </div>
+      <div class="data-card" style="cursor:pointer" onclick="showAppointments()">
+        <div class="data-card-body" style="text-align:center">
+          <i class="fa-regular fa-calendar-check" style="font-size:2rem;color:var(--brand);margin-bottom:10px"></i>
+          <h3>Appointments</h3>
+          <p>View and manage your bookings</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// --------- Mobile Navigation ---------
+function toggleMobileMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.querySelector('.mobile-overlay');
+  
+  sidebar.classList.toggle('mobile-open');
+  overlay.classList.toggle('active');
+}
+
+function closeMobileMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.querySelector('.mobile-overlay');
+  
+  sidebar.classList.remove('mobile-open');
+  overlay.classList.remove('active');
+}
+
+// --------- Responsive Utilities ---------
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+function updateLayoutForScreenSize() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.querySelector('.mobile-overlay');
+  
+  if (!isMobile()) {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('active');
+  }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+  const dropdown = document.getElementById('userDropdown');
+  const userMenu = document.querySelector('.user');
+  if (!userMenu.contains(event.target) && !dropdown.contains(event.target)) {
+    dropdown.style.display = 'none';
+  }
+});
+
+// Handle window resize
+window.addEventListener('resize', updateLayoutForScreenSize);
+
+// Initialize the dashboard
+document.addEventListener("DOMContentLoaded", () => {
+  // Set initial active state for the dashboard link
+  showDashboard();
+  
+  // Load user data if available
+  const user = Auth.getCurrentUser();
+  if (user) {
+    document.getElementById('userName').textContent = user.name || 'Patient';
+    document.getElementById('userEmail').textContent = user.email || 'you@example.com';
+    document.getElementById('userAvatar').textContent = (user.name || 'P').charAt(0).toUpperCase();
+  }
+  
+  // Add event listener for search with debouncing
+  let searchTimeout;
+  document.getElementById('globalSearch').addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(applyFilter, 300);
+  });
+  
+  // Initialize responsive behavior
+  updateLayoutForScreenSize();
+  
+  // Add touch support for mobile devices
+  if ('ontouchstart' in window) {
+    document.body.classList.add('touch-device');
+  }
 });
